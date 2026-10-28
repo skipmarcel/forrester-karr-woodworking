@@ -66,25 +66,32 @@ export default function SelectedWorks() {
     ? layoutRows(photos.map((ph) => ratioOf(ph.src)), width, target)
     : photos.map((_, i) => [i, i + 1]);
 
+  const renderTabs = (label, onSelect) => (
+    <div role="tablist" aria-label={label} className="works__tabs">
+      {projects.map((proj, i) => (
+        <button
+          key={proj.id}
+          role="tab"
+          aria-selected={i === active}
+          aria-label={proj.title}
+          className={'pill' + (i === active ? ' pill--active' : '')}
+          onClick={() => {
+            setActive(i);
+            onSelect?.();
+          }}
+        >
+          {String(i + 1).padStart(2, '0')}
+        </button>
+      ))}
+    </div>
+  );
+
   return (
     <section id="work" className="section works" ref={sectionRef}>
       <div className="rule" />
       <div className="works__head">
         <h2 className="section__label">Selected works</h2>
-        <div role="tablist" aria-label="Projects" className="works__tabs">
-          {projects.map((proj, i) => (
-            <button
-              key={proj.id}
-              role="tab"
-              aria-selected={i === active}
-              aria-label={proj.title}
-              className={'pill' + (i === active ? ' pill--active' : '')}
-              onClick={() => setActive(i)}
-            >
-              {String(i + 1).padStart(2, '0')}
-            </button>
-          ))}
-        </div>
+        {renderTabs('Projects')}
       </div>
 
       <div className="works__project" role="tabpanel" key={p.id}>
@@ -110,6 +117,11 @@ export default function SelectedWorks() {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* Repeat the project list below the gallery; picking one returns to the top of the section */}
+      <div className="works__foot">
+        {renderTabs('Projects, bottom of gallery', () => sectionRef.current.scrollIntoView())}
       </div>
     </section>
   );
