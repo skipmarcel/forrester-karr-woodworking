@@ -129,8 +129,12 @@ a:hover { opacity: .75; }
 .contact__copy { align-self: flex-start; margin-top: 40px; font-family: var(--mono); font-size: 12px; text-transform: uppercase; }
 
 @media (max-width: 640px) {
-  .nav__wordmark { display: none; }
-  .nav__links { gap: 20px; }
+  /* Nav: logo + wordmark on one line, links below, right-aligned with the wordmark's end */
+  .nav { display: grid; justify-content: start; row-gap: 2px; padding-bottom: 10px; }
+  .nav__brand { gap: 14px; }
+  .nav__logo { width: 44px; height: 44px; flex: none; }
+  .nav__wordmark { flex: none; height: auto; width: min(297px, calc(100vw - 2 * var(--gutter) - 58px)); }
+  .nav__links { justify-self: end; gap: 20px; }
   .section__label { font-size: 24px; }
 
   /* Gallery: photos stack edge to edge at their natural shape */
