@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { projects } from '../data/projects.js';
+import { imageUrl, photoRatio } from '../sanity.js';
 
 const GAP = 16; // keep in sync with .works__gallery / .works__row gap
-const FALLBACK_RATIO = 4 / 3; // used until a photo loads and reports its real shape
 
 // Split photos (kept in order) into rows that each span the full width,
 // picking the split whose row heights land closest to the target height.
@@ -27,50 +26,39 @@ function layoutRows(ratios, width, target) {
   return rows;
 }
 
-function Photo({ src, ratio, alt, onRatio }) {
+function Photo({ photo, alt }) {
+  const lqip = photo.asset.metadata.lqip;
   return (
-    <div className={'photo' + (src ? '' : ' photo--empty')} style={{ '--ratio': ratio }}>
-      {src ? (
-        <img
-          src={src}
-          alt={alt}
-          loading="lazy"
-          onLoad={(e) => onRatio(src, e.target.naturalWidth / e.target.naturalHeight)}
-        />
-      ) : (
-        <div className="photo__empty">Photo coming soon</div>
-      )}
+    <div className="photo" style={{ '--ratio': photoRatio(photo), backgroundImage: lqip && `url(${lqip})` }}>
+      <img src={imageUrl(photo, 1600)} alt={photo.alt || alt} loading="lazy" />
     </div>
   );
 }
 
-export default function SelectedWorks() {
+export default function SelectedWorks({ projects }) {
   const [active, setActive] = useState(0);
-  const [ratios, setRatios] = useState({});
   const [width, setWidth] = useState(0);
   const sectionRef = useRef(null);
   const p = projects[active];
-  const photos = [p.main, ...p.details];
+  const photos = p ? [p.mainImage, ...(p.details || [])].filter((ph) => ph?.asset) : [];
 
   useEffect(() => {
+    if (!sectionRef.current) return;
     const ro = new ResizeObserver(([entry]) => setWidth(entry.contentRect.width));
     ro.observe(sectionRef.current);
     return () => ro.disconnect();
   }, []);
 
-  const ratioOf = (src) => ratios[src] || FALLBACK_RATIO;
-  const setRatio = (src, r) => setRatios((prev) => (prev[src] === r ? prev : { ...prev, [src]: r }));
-
   const target = Math.max(320, Math.min(600, window.innerHeight * 0.7));
   const rows = width
-    ? layoutRows(photos.map((ph) => ratioOf(ph.src)), width, target)
+    ? layoutRows(photos.map(photoRatio), width, target)
     : photos.map((_, i) => [i, i + 1]);
 
   const renderTabs = (label, onSelect) => (
     <div role="tablist" aria-label={label} className="works__tabs">
       {projects.map((proj, i) => (
         <button
-          key={proj.id}
+          key={proj._id}
           role="tab"
           aria-selected={i === active}
           aria-label={proj.title}
@@ -86,6 +74,8 @@ export default function SelectedWorks() {
     </div>
   );
 
+  if (!p) return null;
+
   return (
     <section id="work" className="section works" ref={sectionRef}>
       <div className="rule" />
@@ -94,7 +84,7 @@ export default function SelectedWorks() {
         {renderTabs('Projects')}
       </div>
 
-      <div className="works__project" role="tabpanel" key={p.id}>
+      <div className="works__project" role="tabpanel" key={p._id}>
         <div className="works__text">
           <h3 className="works__title">{p.title}</h3>
           <p className="works__desc">{p.description}</p>
@@ -106,11 +96,9 @@ export default function SelectedWorks() {
                 const i = start + k;
                 return (
                   <Photo
-                    key={ph.src || i}
-                    src={ph.src}
-                    ratio={ratioOf(ph.src)}
+                    key={ph.asset._id + i}
+                    photo={ph}
                     alt={i === 0 ? p.title : `${p.title}, detail ${i}`}
-                    onRatio={setRatio}
                   />
                 );
               })}

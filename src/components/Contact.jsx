@@ -1,26 +1,26 @@
 import { useState } from 'react';
 
-const EMAIL = 'fkwoodworking@gmail.com';
-const PHONE = '971 222 9333';
-const INSTAGRAM = '#'; // TODO: add Instagram URL
+// "971 222 9333" -> "tel:+19712229333"
+const telHref = (phone) => {
+  const digits = phone.replace(/\D/g, '');
+  return 'tel:+' + (digits.length === 10 ? '1' + digits : digits);
+};
 
-export default function Contact() {
+export default function Contact({ title, intro, projectTypes, email, phone, instagram }) {
   const [note, setNote] = useState('');
 
   function onSubmit(e) {
     e.preventDefault();
     const f = e.currentTarget.elements;
     const body = `Name: ${f.name.value}\nEmail: ${f.email.value}\nProject: ${f.type.value}\n\n${f.message.value}`;
-    window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent('Project inquiry: ' + f.type.value)}&body=${encodeURIComponent(body)}`;
+    window.location.href = `mailto:${email}?subject=${encodeURIComponent('Project inquiry: ' + f.type.value)}&body=${encodeURIComponent(body)}`;
     setNote('Opening your email app…');
   }
 
   return (
     <footer id="contact" className="contact">
-      <h2 className="contact__title">Currently accepting new commissions.</h2>
-      <p className="contact__intro">
-        Tell Forrester about the room, the piece and your timeline. Photos and rough measurements help.
-      </p>
+      {title && <h2 className="contact__title">{title}</h2>}
+      {intro && <p className="contact__intro">{intro}</p>}
 
       <form className="form" onSubmit={onSubmit}>
         <div className="form__row">
@@ -30,11 +30,9 @@ export default function Contact() {
         <label className="field">
           Project type
           <select name="type">
-            <option>Kitchen</option>
-            <option>Bathroom vanity</option>
-            <option>Built-ins &amp; shelving</option>
-            <option>Furniture</option>
-            <option>Something else</option>
+            {projectTypes.map((t) => (
+              <option key={t}>{t}</option>
+            ))}
           </select>
         </label>
         <label className="field">Project details<textarea name="message" rows={5} /></label>
@@ -45,9 +43,9 @@ export default function Contact() {
       </form>
 
       <div className="contact__links">
-        <a href="tel:+19712229333">{PHONE}</a>
-        <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
-        <a href={INSTAGRAM}>Follow on Instagram</a>
+        {phone && <a href={telHref(phone)}>{phone}</a>}
+        {email && <a href={`mailto:${email}`}>{email}</a>}
+        {instagram && <a href={instagram}>Follow on Instagram</a>}
       </div>
       <div className="contact__copy">© {new Date().getFullYear()} Forrester Karr Woodworking</div>
     </footer>
