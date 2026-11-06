@@ -35,8 +35,14 @@ function Photo({ photo, alt }) {
   );
 }
 
+// ?project=N (1-based) opens that project; a missing or out-of-range value opens the first.
+function initialProject(count) {
+  const n = Number(new URLSearchParams(window.location.search).get('project'));
+  return Number.isInteger(n) && n >= 1 && n <= count ? n - 1 : 0;
+}
+
 export default function SelectedWorks({ projects }) {
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(() => initialProject(projects.length));
   const [width, setWidth] = useState(0);
   const sectionRef = useRef(null);
   const p = projects[active];
@@ -47,6 +53,15 @@ export default function SelectedWorks({ projects }) {
     const ro = new ResizeObserver(([entry]) => setWidth(entry.contentRect.width));
     ro.observe(sectionRef.current);
     return () => ro.disconnect();
+  }, []);
+
+  // The section renders after the content loads, too late for the browser's own jump to #work.
+  // Scrolls the window, not scrollIntoView, so a page embedding this site in an iframe doesn't scroll too.
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (window.location.hash !== '#work' || !el) return;
+    const offset = parseFloat(getComputedStyle(el).scrollMarginTop) || 0;   // leaves it just under the fixed nav
+    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - offset, behavior: 'instant' });
   }, []);
 
   const target = Math.max(320, Math.min(600, window.innerHeight * 0.7));
