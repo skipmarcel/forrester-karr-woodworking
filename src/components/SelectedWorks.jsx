@@ -95,7 +95,7 @@ export default function SelectedWorks({ projects }) {
     <section id="work" className="section works" ref={sectionRef}>
       <div className="rule" />
       <div className="works__head">
-        <h2 className="section__label">Selected works</h2>
+        <h2 className="section__label">Selected work</h2>
         {renderTabs('Projects')}
       </div>
 
