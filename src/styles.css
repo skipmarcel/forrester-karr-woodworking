@@ -130,13 +130,13 @@ a:hover { opacity: .75; }
 .form__note a { text-decoration: underline; }
 .contact__links { display: contents; font-family: var(--mono); font-size: 14px; letter-spacing: .06em; text-transform: uppercase; }
 .contact__instagram { display: flex; }
-/* Footer details: copyright, CCB, email, phone, Instagram, stacked and centered */
+/* Footer details: CCB, email, phone, Instagram, copyright, stacked and centered */
 .contact__meta { display: flex; flex-direction: column; align-items: center; gap: 16px; margin-top: 8px; }
-.contact__ccb { order: 2; }
-.contact__email { order: 3; }
-.contact__phone { order: 4; }
-.contact__instagram { order: 5; }
-.contact__copy { order: 1; font-family: var(--mono); font-size: 12px; text-transform: uppercase; }
+.contact__ccb { order: 1; line-height: 1; letter-spacing: .06em; } /* re-declared so the spacing scales with its larger size */
+.contact__email { order: 2; }
+.contact__phone { order: 3; }
+.contact__instagram { order: 4; }
+.contact__copy { order: 5; font-family: var(--mono); font-size: 12px; text-transform: uppercase; }
 .load-error { padding: 160px var(--gutter); font-family: var(--serif); font-size: 20px; }
 
 @media (max-width: 640px) {

@@ -6,6 +6,7 @@ const telHref = (phone) => {
   return 'tel:+' + (digits.length === 10 ? '1' + digits : digits);
 };
 
+const CCB = 'CCB #257160'; // Oregon contractor's license
 const FORMSPREE = 'https://formspree.io/f/myewkwaj'; // Forrester's Formspree form
 
 export default function Contact({ title, intro, projectTypes, email, phone, instagram }) {
@@ -68,7 +69,10 @@ export default function Contact({ title, intro, projectTypes, email, phone, inst
         <div className="contact__links">
           {phone && <a href={telHref(phone)} className="contact__phone">{phone}</a>}
           {email && <a href={`mailto:${email}`} className="contact__email">{email}</a>}
-          <strong className="contact__ccb">CCB #257160</strong>
+          {/* Monospaced, so scaling by character count makes it exactly as wide as the email */}
+          <strong className="contact__ccb" style={email ? { fontSize: `calc(14px * ${email.length} / ${CCB.length})` } : undefined}>
+            {CCB}
+          </strong>
           {instagram && (
             <a href={instagram} className="contact__instagram" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
               <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
