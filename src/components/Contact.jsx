@@ -6,15 +6,25 @@ const telHref = (phone) => {
   return 'tel:+' + (digits.length === 10 ? '1' + digits : digits);
 };
 
-export default function Contact({ title, intro, projectTypes, email, phone, instagram }) {
-  const [note, setNote] = useState('');
+const FORMSPREE = 'https://formspree.io/f/myewkwaj'; // Forrester's Formspree form
 
-  function onSubmit(e) {
+export default function Contact({ title, intro, projectTypes, email, phone, instagram }) {
+  const [status, setStatus] = useState('idle'); // idle | sending | sent | error
+
+  async function onSubmit(e) {
     e.preventDefault();
-    const f = e.currentTarget.elements;
-    const body = `Name: ${f.name.value}\nEmail: ${f.email.value}\nProject: ${f.type.value}\n\n${f.message.value}`;
-    window.location.href = `mailto:${email}?subject=${encodeURIComponent('Project inquiry: ' + f.type.value)}&body=${encodeURIComponent(body)}`;
-    setNote('Opening your email app…');
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    data.set('_subject', 'Project inquiry: ' + data.get('type'));
+    setStatus('sending');
+    try {
+      const res = await fetch(FORMSPREE, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+      if (!res.ok) throw new Error(res.status);
+      form.reset();
+      setStatus('sent');
+    } catch {
+      setStatus('error');
+    }
   }
 
   return (
@@ -36,9 +46,21 @@ export default function Contact({ title, intro, projectTypes, email, phone, inst
           </select>
         </label>
         <label className="field">Project details<textarea name="message" rows={5} /></label>
+        {/* Spam trap: hidden from people, filled in by bots, rejected by Formspree */}
+        <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ display: 'none' }} />
         <div className="form__submit">
-          <button type="submit" className="btn">Send inquiry</button>
-          <span className="form__note" aria-live="polite">{note}</span>
+          <button type="submit" className="btn" disabled={status === 'sending'}>
+            {status === 'sending' ? 'Sending…' : 'Send inquiry'}
+          </button>
+          <span className="form__note" aria-live="polite">
+            {status === 'sent' && 'Thanks! Your message was sent. Forrester will be in touch soon.'}
+            {status === 'error' && (
+              <>
+                Sorry, that didn't go through. Please try again or email{' '}
+                <a href={`mailto:${email}`}>{email}</a>.
+              </>
+            )}
+          </span>
         </div>
       </form>
 

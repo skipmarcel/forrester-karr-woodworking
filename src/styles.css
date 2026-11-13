@@ -123,7 +123,9 @@ a:hover { opacity: .75; }
   font-family: var(--mono); font-size: 15px; letter-spacing: .06em; text-transform: uppercase; padding: 22px 44px;
 }
 .btn:hover { background: var(--accent-dark); }
-.form__note { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: #cfcfcf; min-height: 1em; }
+.btn:disabled { opacity: .7; cursor: default; }
+.form__note { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: #cfcfcf; min-height: 1em; max-width: 46ch; text-align: center; line-height: 1.6; }
+.form__note a { text-decoration: underline; }
 .contact__links { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 32px; font-family: var(--mono); font-size: 14px; letter-spacing: .06em; text-transform: uppercase; }
 .contact__instagram { display: flex; }
 .contact__copy { align-self: flex-start; margin-top: 40px; font-family: var(--mono); font-size: 12px; text-transform: uppercase; }

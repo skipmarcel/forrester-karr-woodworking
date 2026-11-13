@@ -52,7 +52,7 @@ cd studio && npx sanity cors add https://your-domain.com --no-credentials
 
 ## Contact form
 
-The form currently opens the visitor's email app with a pre-filled message to the email set in Site settings. To receive submissions directly, connect a form service (Formspree, Netlify Forms, Basin, etc.) in `src/components/Contact.jsx`.
+The form sends inquiries through Forrester's free [Formspree](https://formspree.io) account (form `myewkwaj`), which emails each one to him. The form address lives in `src/components/Contact.jsx`. The free plan allows 50 submissions a month.
 
 ## To do
 
