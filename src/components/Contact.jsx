@@ -70,9 +70,9 @@ export default function Contact({ title, intro, projectTypes, email, phone, inst
           {phone && <a href={telHref(phone)} className="contact__phone">{phone}</a>}
           {email && <a href={`mailto:${email}`} className="contact__email">{email}</a>}
           {/* Monospaced, so scaling by character count makes it exactly as wide as the email */}
-          <strong className="contact__ccb" style={email ? { fontSize: `calc(14px * ${email.length} / ${CCB.length})` } : undefined}>
+          <span className="contact__ccb" style={email ? { fontSize: `calc(14px * ${email.length} / ${CCB.length})` } : undefined}>
             {CCB}
-          </strong>
+          </span>
           {instagram && (
             <a href={instagram} className="contact__instagram" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
               <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
