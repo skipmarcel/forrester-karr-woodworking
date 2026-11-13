@@ -64,21 +64,23 @@ export default function Contact({ title, intro, projectTypes, email, phone, inst
         </div>
       </form>
 
-      <div className="contact__links">
-        {phone && <a href={telHref(phone)}>{phone}</a>}
-        {email && <a href={`mailto:${email}`}>{email}</a>}
-        <strong>CCB #257160</strong>
-        {instagram && (
-          <a href={instagram} className="contact__instagram" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
-              <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" />
-              <circle cx="12" cy="12" r="4.25" />
-              <circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none" />
-            </svg>
-          </a>
-        )}
+      <div className="contact__meta">
+        <div className="contact__links">
+          {phone && <a href={telHref(phone)} className="contact__phone">{phone}</a>}
+          {email && <a href={`mailto:${email}`} className="contact__email">{email}</a>}
+          <strong className="contact__ccb">CCB #257160</strong>
+          {instagram && (
+            <a href={instagram} className="contact__instagram" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" />
+                <circle cx="12" cy="12" r="4.25" />
+                <circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
+          )}
+        </div>
+        <div className="contact__copy">© {new Date().getFullYear()} Forrester Karr, LLC</div>
       </div>
-      <div className="contact__copy">© {new Date().getFullYear()} Forrester Karr, LLC</div>
     </footer>
   );
 }

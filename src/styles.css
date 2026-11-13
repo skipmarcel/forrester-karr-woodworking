@@ -128,6 +128,7 @@ a:hover { opacity: .75; }
 .form__note a { text-decoration: underline; }
 .contact__links { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 32px; font-family: var(--mono); font-size: 14px; letter-spacing: .06em; text-transform: uppercase; }
 .contact__instagram { display: flex; }
+.contact__meta { display: contents; } /* desktop: links and copyright lay out as before */
 .contact__copy { align-self: flex-start; margin-top: 40px; font-family: var(--mono); font-size: 12px; text-transform: uppercase; }
 .load-error { padding: 160px var(--gutter); font-family: var(--serif); font-size: 20px; }
 
@@ -158,4 +159,13 @@ a:hover { opacity: .75; }
   .works__gallery { margin-inline: calc(-1 * var(--gutter)); gap: 6px; }
   .works__row { flex-direction: column; gap: 6px; }
   .works__row .photo { flex: none; }
+
+  /* Footer: copyright, CCB, email, phone stacked and centered */
+  .contact__meta { display: flex; flex-direction: column; align-items: center; gap: 16px; margin-top: 8px; }
+  .contact__links { display: contents; }
+  .contact__copy { order: 1; align-self: center; margin-top: 0; }
+  .contact__ccb { order: 2; }
+  .contact__email { order: 3; }
+  .contact__phone { order: 4; }
+  .contact__instagram { order: 5; }
 }
