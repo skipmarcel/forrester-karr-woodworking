@@ -14,9 +14,36 @@ export const project = defineType({
     }),
     defineField({
       name: 'description',
-      type: 'text',
-      rows: 3,
-      description: 'Wood, finish and scope of the project.',
+      type: 'array',
+      description: 'Wood, finish and scope of the project. To add a link, select the words and click the link icon.',
+      of: [
+        defineArrayMember({
+          type: 'block',
+          styles: [{title: 'Normal', value: 'normal'}],
+          lists: [],
+          marks: {
+            decorators: [
+              {title: 'Bold', value: 'strong'},
+              {title: 'Italic', value: 'em'},
+            ],
+            annotations: [
+              defineArrayMember({
+                name: 'link',
+                title: 'Link',
+                type: 'object',
+                fields: [
+                  defineField({
+                    name: 'href',
+                    title: 'URL',
+                    type: 'url',
+                    validation: (rule) => rule.required().uri({scheme: ['http', 'https', 'mailto', 'tel']}),
+                  }),
+                ],
+              }),
+            ],
+          },
+        }),
+      ],
     }),
     defineField({
       name: 'mainImage',

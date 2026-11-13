@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { imageUrl, photoRatio } from '../sanity.js';
+import RichText from './RichText.jsx';
 
 const GAP = 16; // keep in sync with .works__gallery / .works__row gap
 
@@ -102,7 +103,7 @@ export default function SelectedWorks({ projects }) {
       <div className="works__project" role="tabpanel" key={p._id}>
         <div className="works__text">
           <h3 className="works__title">{p.title}</h3>
-          <p className="works__desc">{p.description}</p>
+          <RichText value={p.description} className="works__desc" />
         </div>
         <div className="works__gallery">
           {rows.map(([start, end]) => (
