@@ -45,6 +45,7 @@ export default function Contact({ title, intro, projectTypes, email, phone, inst
       <div className="contact__links">
         {phone && <a href={telHref(phone)}>{phone}</a>}
         {email && <a href={`mailto:${email}`}>{email}</a>}
+        <strong>CCB #257160</strong>
         {instagram && (
           <a href={instagram} className="contact__instagram" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
