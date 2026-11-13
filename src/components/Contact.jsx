@@ -56,7 +56,7 @@ export default function Contact({ title, intro, projectTypes, email, phone, inst
           </a>
         )}
       </div>
-      <div className="contact__copy">© {new Date().getFullYear()} Forrester Karr Woodworking</div>
+      <div className="contact__copy">© {new Date().getFullYear()} Forrester Karr, LLC</div>
     </footer>
   );
 }
