@@ -124,7 +124,8 @@ a:hover { opacity: .75; }
 }
 .btn:hover { background: var(--accent-dark); }
 .form__note { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: #cfcfcf; min-height: 1em; }
-.contact__links { display: flex; flex-wrap: wrap; justify-content: center; gap: 32px; font-family: var(--mono); font-size: 14px; letter-spacing: .06em; text-transform: uppercase; }
+.contact__links { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 32px; font-family: var(--mono); font-size: 14px; letter-spacing: .06em; text-transform: uppercase; }
+.contact__instagram { display: flex; }
 .contact__copy { align-self: flex-start; margin-top: 40px; font-family: var(--mono); font-size: 12px; text-transform: uppercase; }
 .load-error { padding: 160px var(--gutter); font-family: var(--serif); font-size: 20px; }
 

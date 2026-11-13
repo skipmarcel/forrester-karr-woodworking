@@ -45,7 +45,15 @@ export default function Contact({ title, intro, projectTypes, email, phone, inst
       <div className="contact__links">
         {phone && <a href={telHref(phone)}>{phone}</a>}
         {email && <a href={`mailto:${email}`}>{email}</a>}
-        {instagram && <a href={instagram}>Follow on Instagram</a>}
+        {instagram && (
+          <a href={instagram} className="contact__instagram" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+              <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" />
+              <circle cx="12" cy="12" r="4.25" />
+              <circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none" />
+            </svg>
+          </a>
+        )}
       </div>
       <div className="contact__copy">© {new Date().getFullYear()} Forrester Karr Woodworking</div>
     </footer>
